@@ -1,0 +1,131 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
+import { ShieldCheck, Mail, Lock, Loader2 } from 'lucide-react';
+import api from '../api/client';
+
+export default function LoginPage() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleNativeLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await api.post('/auth/login', { email, password });
+      login(data.user, data.access_token);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await api.post('/auth/google', { token: credentialResponse.credential });
+      login(data.user, data.access_token);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Google authentication failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-[80vh] px-4 animate-fade-in">
+      <div className="card w-full max-w-md p-8">
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4 border border-primary/20">
+            <ShieldCheck className="w-6 h-6 text-primary" />
+          </div>
+          <h1 className="text-2xl font-bold text-fg">Admin Log In</h1>
+          <p className="text-sm text-fg-3 mt-1">Access the AuthentiFy secure dashboard</p>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-xl bg-fake-muted border border-fake/20 text-fake text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <div className="flex justify-center mb-6">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError('Google Login was unsuccessful.')}
+            useOneTap
+            shape="rectangular"
+            theme="filled_black"
+          />
+        </div>
+
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border-light"></div>
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-bg px-2 text-fg-3 uppercase tracking-wider">Or continue with</span>
+          </div>
+        </div>
+
+        <form onSubmit={handleNativeLogin} className="space-y-4">
+          <div>
+            <label className="block text-xs font-semibold text-fg-2 uppercase tracking-wide mb-1.5">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-3" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-bg-2 border border-border-light rounded-xl py-2.5 pl-10 pr-4 text-sm text-fg placeholder:text-fg-3 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                placeholder="admin@authentify.com"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-fg-2 uppercase tracking-wide mb-1.5">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-3" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-bg-2 border border-border-light rounded-xl py-2.5 pl-10 pr-4 text-sm text-fg placeholder:text-fg-3 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full btn-primary py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 mt-2"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Log In'}
+          </button>
+        </form>
+
+        <p className="text-center text-sm text-fg-3 mt-6">
+          Don't have an admin account?{' '}
+          <Link to="/register" className="text-primary hover:text-primary-light transition-colors font-medium">
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -66,7 +66,7 @@ async def qr_generate(req: QRGenerateRequest):
     if not record:
         raise HTTPException(404, f"No certificate found with ID: {cert_id}")
 
-    verify_url = f"https://edutrust.app/qr-verify?id={cert_id}"
+    verify_url = f"https://authentify.app/qr-verify?id={cert_id}"
     qr = qrcode.make(verify_url)
     buf = io.BytesIO()
     qr.save(buf, format="PNG")

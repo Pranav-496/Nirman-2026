@@ -1,4 +1,4 @@
-"""Pydantic models for EduTrust request/response validation."""
+"""Pydantic models for AuthentiFy request/response validation."""
 
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -52,3 +52,20 @@ class HistoryEntry(BaseModel):
     cert_id: Optional[str] = None
     verdict: Verdict
     score: float
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    name: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
+
+class GoogleLoginRequest(BaseModel):
+    token: str

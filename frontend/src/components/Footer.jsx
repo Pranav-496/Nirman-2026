@@ -12,7 +12,7 @@ export default function Footer() {
               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                 <ShieldCheck className="w-4 h-4 text-white" />
               </div>
-              <span className="text-sm font-bold gradient-text">EduTrust</span>
+              <span className="text-sm font-bold gradient-text">AuthentiFy</span>
             </div>
             <p className="text-xs text-fg-3 leading-relaxed">
               AI-Powered Certificate Verification System for educational institutions.
@@ -26,9 +26,8 @@ export default function Footer() {
             <div className="flex flex-col gap-1.5">
               {[
                 { to: '/', label: 'Verify Certificate' },
-                { to: '/qr', label: 'QR Lookup' },
                 { to: '/dashboard', label: 'Dashboard' },
-                { to: '/about', label: 'How It Works' },
+                { to: '/about', label: 'About' },
               ].map(({ to, label }) => (
                 <Link key={to} to={to} className="text-xs text-fg-3 hover:text-primary transition-colors">
                   {label}
@@ -52,7 +51,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-border-light pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-fg-3">
-          <span>© 2026 EduTrust · AI-Powered Verification </span>
+          <span>© 2026 AuthentiFy · AI-Powered Verification </span>
           <div className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-valid animate-pulse" />
             <span>All systems operational</span>

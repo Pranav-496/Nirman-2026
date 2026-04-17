@@ -5,7 +5,7 @@ const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('edutrust-theme');
+      const saved = localStorage.getItem('authentify-theme');
       if (saved) return saved;
       if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
     }
@@ -14,7 +14,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('edutrust-theme', theme);
+    localStorage.setItem('authentify-theme', theme);
 
     // Update theme-color meta tag
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -27,7 +27,7 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = (e) => {
-      const saved = localStorage.getItem('edutrust-theme');
+      const saved = localStorage.getItem('authentify-theme');
       if (!saved) {
         setTheme(e.matches ? 'dark' : 'light');
       }

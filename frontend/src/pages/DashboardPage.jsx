@@ -144,7 +144,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+      <div className="grid grid-cols-1 gap-3 mt-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
         <Link to="/" className="card p-4 flex items-center gap-3 group hover:border-primary/30">
           <div className="w-10 h-10 rounded-xl bg-primary-muted flex items-center justify-center group-hover:scale-110 transition-transform">
             <ShieldCheck className="w-5 h-5 text-primary" />
@@ -154,16 +154,6 @@ export default function DashboardPage() {
             <p className="text-xs text-fg-3">Upload or manually check a certificate</p>
           </div>
           <ArrowRight className="w-4 h-4 text-fg-3 group-hover:text-primary transition-colors" />
-        </Link>
-        <Link to="/qr" className="card p-4 flex items-center gap-3 group hover:border-secondary/30">
-          <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-            <TrendingUp className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold text-fg">QR Lookup</p>
-            <p className="text-xs text-fg-3">Quick verification via certificate ID</p>
-          </div>
-          <ArrowRight className="w-4 h-4 text-fg-3 group-hover:text-secondary transition-colors" />
         </Link>
       </div>
     </div>

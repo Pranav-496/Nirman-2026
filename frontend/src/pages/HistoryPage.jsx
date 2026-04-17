@@ -50,7 +50,7 @@ export default function HistoryPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `edutrust-history-${Date.now()}.csv`;
+    a.download = `authentify-history-${Date.now()}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };

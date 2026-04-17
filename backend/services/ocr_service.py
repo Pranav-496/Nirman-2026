@@ -45,7 +45,7 @@ def _tesseract_ocr(img: Image.Image) -> str:
         text = pytesseract.image_to_string(img)
         return text.strip()
     except Exception as e:
-        logger.warning(f"pytesseract failed: {e}")
+        logger.debug(f"pytesseract not found, will rely on EasyOCR: {e}")
         return ""
 
 

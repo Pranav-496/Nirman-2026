@@ -120,7 +120,7 @@ export default function AboutPage() {
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-muted border border-primary/15 mb-4">
           <Info className="w-7 h-7 text-primary" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold gradient-text mb-3">How EduTrust Works</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold gradient-text mb-3">How AuthentiFy Works</h1>
         <p className="text-fg-2 max-w-xl mx-auto text-sm leading-relaxed">
           A 7-step AI-powered verification pipeline that combines OCR, cryptographic hashing,
           image forensics, and database matching to validate academic certificates.

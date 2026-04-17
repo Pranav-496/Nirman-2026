@@ -5,7 +5,7 @@ import { Upload, FileImage, FileText, CheckCircle } from 'lucide-react';
 export default function DropZone({ onFileSelect, disabled }) {
   const onDrop = useCallback(
     (accepted) => {
-      if (accepted.length > 0) onFileSelect(accepted[0]);
+      if (accepted.length > 0) onFileSelect(accepted);
     },
     [onFileSelect]
   );
@@ -16,19 +16,18 @@ export default function DropZone({ onFileSelect, disabled }) {
       'image/*': ['.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.webp'],
       'application/pdf': ['.pdf'],
     },
-    maxFiles: 1,
     maxSize: 10 * 1024 * 1024,
     disabled,
   });
 
-  const file = acceptedFiles[0];
+  const fileCount = acceptedFiles.length;
 
   return (
     <div
       {...getRootProps()}
       className={`relative group border-2 border-dashed rounded-2xl p-10 sm:p-12 text-center cursor-pointer transition-all duration-300 ${
         isDragActive
-          ? 'border-primary bg-primary-muted scale-[1.02]'
+          ? 'border-primary bg-primary-muted scale-[1.02] animate-pulse-scan'
           : disabled
           ? 'border-border opacity-50 cursor-not-allowed'
           : 'border-border hover:border-primary/50 hover:bg-primary-muted/50'
@@ -37,23 +36,20 @@ export default function DropZone({ onFileSelect, disabled }) {
       <input {...getInputProps()} />
 
       {/* Background glow on hover */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-secondary/5 transition-opacity duration-500 pointer-events-none ${isDragActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-hover:animate-pulse-scan'}`} />
+
 
       <div className="relative flex flex-col items-center gap-4">
-        {file ? (
+        {fileCount > 0 ? (
           <>
             <div className="relative">
-              {file.type === 'application/pdf' ? (
-                <FileText className="w-14 h-14 text-secondary animate-float" />
-              ) : (
-                <FileImage className="w-14 h-14 text-primary-light animate-float" />
-              )}
+              <FileImage className="w-14 h-14 text-primary-light animate-float" />
               <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-valid" />
             </div>
             <div>
-              <p className="text-lg font-semibold text-fg">{file.name}</p>
+              <p className="text-lg font-semibold text-fg">{fileCount} file{fileCount > 1 ? 's' : ''} selected</p>
               <p className="text-sm text-fg-3 mt-1">
-                {(file.size / 1024).toFixed(1)} KB — Click or drop to replace
+                Click or drop to replace
               </p>
             </div>
           </>

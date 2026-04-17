@@ -7,4 +7,4 @@ router = APIRouter(tags=["Health"])
 
 @router.get("/health")
 async def health():
-    return {"status": "ok", "service": "EduTrust API", "version": "1.0.0"}
+    return {"status": "ok", "service": "AuthentiFy API", "version": "1.0.0"}

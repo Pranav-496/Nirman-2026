@@ -5,9 +5,9 @@ import ResultCard from '../components/ResultCard';
 export default function ResultPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const result = state?.result;
+  const results = state?.results || (state?.result ? [state.result] : null);
 
-  if (!result) {
+  if (!results || results.length === 0) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center animate-fade-in">
         <div className="w-16 h-16 rounded-2xl bg-bg-3 flex items-center justify-center mx-auto mb-4">
@@ -45,7 +45,18 @@ export default function ResultPage() {
         </button>
       </div>
 
-      <ResultCard data={result} />
+      <div className="space-y-8">
+        {results.map((r, i) => (
+          <div key={i} className="animate-slide-up" style={{ animationDelay: `${i * 0.1}s` }}>
+             {r.original_file && (
+               <div className="mb-3 px-1 text-sm font-semibold text-fg-2">
+                 File: {r.original_file}
+               </div>
+             )}
+             <ResultCard data={r} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

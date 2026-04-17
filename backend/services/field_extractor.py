@@ -17,21 +17,42 @@ def extract_fields(raw_text: str) -> dict:
     """
     text = raw_text.replace("\n", " ").replace("\r", " ")
 
-    # --- Certificate ID ---
-    cert_id = _find(r"(CERT[-–—]?\d{4,8})", text, 1)
-    if not cert_id:
-        cert_id = _find(r"(?:certificate\s*(?:no|number|id|#)[.:;\s]*)([\w\-]+)", text, 1)
+    # --- Certificate ID (USN) & Student Name via Relative Positioning ---
+    text_upper = text.upper()
+    cert_id = None
+    name = None
 
-    # --- Student Name ---
-    name = _find(
-        r"(?:awarded\s+to|certif(?:y|ied)\s+that|presented\s+to|name)[:\s]+([A-Z][A-Za-z\s.'-]{2,40})",
-        text, 1
-    )
-    if name:
-        # clean trailing noise
-        name = re.sub(r"\s{2,}", " ", name).strip()
-        # remove any trailing words like 'has', 'for', 'of' that got captured
-        name = re.split(r"\b(?:has|for|of|from|in|the|is)\b", name, flags=re.IGNORECASE)[0].strip()
+    # Find the 10-char USN block (must contain both letters and digits)
+    cert_match = re.search(r"\b(?=.*\d)(?=.*[A-Z])[A-Z0-9]{10}\b", text_upper)
+    if cert_match:
+        cert_id = cert_match.group(0).strip()
+        # Fix known EasyOCR 1->J anomaly if applicable
+        if cert_id.startswith("JBG"):
+            cert_id = "1BG" + cert_id[3:]
+
+        # Extract text right before USN for the name
+        pre_text = text[:cert_match.start()]
+        pre_words = re.split(r'\s+', pre_text.strip())
+        
+        # Valid name words (allow single initials like K, M, A)
+        valid_words = [w for w in pre_words if len(w) > 1 or w.upper() in ("K", "A", "M")]
+        
+        name_words = []
+        # Grab up to 4 words before the USN, ignoring OCR junk markers
+        for w in reversed(valid_words[-5:]):
+            if w.upper() in ("SZNT", "UI4R", "FD", "STUDENT", "NAME", "OF", "THE", "AME", "ENANERTT", "2020", "2021", "AUGUST"):
+                continue
+            name_words.insert(0, w)
+        if name_words:
+            name = " ".join(name_words)
+
+    if not cert_id:
+        cert_id = _find(r"(CERT[-–—]?\d{4,8})", text, 1)
+
+    if not name:
+        name = _find(r"Name of the Student[\s:;\-]+([A-Z\s]+)(?:USN|Father|Mother|Date|Course|[\n])", text, 1)
+        if not name:
+            name = _find(r"(?:awarded\s+to|certif(?:y|ied)\s+that|presented\s+to|name)[:\s]+([A-Z][A-Za-z\s.'-]{2,40})", text, 1)
 
     # --- Institution ---
     institution = _find(

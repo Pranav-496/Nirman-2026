@@ -14,7 +14,6 @@ const STATUS_MESSAGES = [
 
 export default function UploadPage() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState('upload'); // 'upload' | 'manual'
   const [loading, setLoading] = useState(false);
   const [statusIdx, setStatusIdx] = useState(0);
   const [error, setError] = useState('');
@@ -30,17 +29,28 @@ export default function UploadPage() {
   };
 
   // --- File upload handler ---
-  const handleFileUpload = async (file) => {
+  const handleFileUpload = async (files) => {
     setLoading(true);
     setError('');
     const interval = startStatusCycle();
     try {
-      const form = new FormData();
-      form.append('file', file);
-      const { data } = await api.post('/verify', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      navigate('/result', { state: { result: data } });
+      const results = [];
+      const filesArray = Array.isArray(files) ? files : [files];
+      
+      for (const file of filesArray) {
+        const form = new FormData();
+        form.append('file', file);
+        const { data } = await api.post('/verify', form, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        results.push({ ...data, original_file: file.name });
+      }
+      
+      if (results.length === 1) {
+        navigate('/result', { state: { result: results[0] } });
+      } else {
+        navigate('/result', { state: { results: results } });
+      }
     } catch (err) {
       setError(err.response?.data?.detail || 'Verification failed. Please try again.');
     } finally {
@@ -49,29 +59,7 @@ export default function UploadPage() {
     }
   };
 
-  // --- Manual form handler ---
-  const handleManual = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    const interval = startStatusCycle();
-    const fd = new FormData(e.target);
-    try {
-      const { data } = await api.post('/verify/manual', {
-        cert_id: fd.get('cert_id'),
-        name: fd.get('name'),
-        institution: fd.get('institution') || undefined,
-        year: fd.get('year') || undefined,
-        grade: fd.get('grade') || undefined,
-      });
-      navigate('/result', { state: { result: data } });
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Verification failed. Please try again.');
-    } finally {
-      clearInterval(interval);
-      setLoading(false);
-    }
-  };
+  // --- Removed Manual form handler ---
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10 sm:py-14">
@@ -102,83 +90,40 @@ export default function UploadPage() {
         ))}
       </div>
 
-      {/* Tab switcher */}
-      <div className="flex justify-center gap-2 mb-6 animate-slide-up" style={{ animationDelay: '0.15s' }}>
-        {[
-          { key: 'upload', label: 'Upload File', icon: ShieldCheck },
-          { key: 'manual', label: 'Quick Check', icon: Keyboard },
-        ].map(({ key, label, icon: I }) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className={`flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-              tab === key
-                ? 'bg-primary-muted text-primary-light border border-primary/20'
-                : 'text-fg-3 hover:text-fg-2 border border-transparent hover:bg-hover'
-            }`}
-          >
-            <I className="w-4 h-4" />
-            {label}
-          </button>
-        ))}
+      {/* Dropzone is the only method now */}
+
+      <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <DropZone onFileSelect={handleFileUpload} disabled={loading} />
       </div>
-
-      {/* Upload tab */}
-      {tab === 'upload' && (
-        <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <DropZone onFileSelect={handleFileUpload} disabled={loading} />
-        </div>
-      )}
-
-      {/* Manual tab */}
-      {tab === 'manual' && (
-        <form
-          onSubmit={handleManual}
-          className="card p-6 space-y-4 animate-slide-up"
-          style={{ animationDelay: '0.2s' }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { name: 'cert_id', label: 'Certificate ID *', placeholder: 'CERT-100001', required: true },
-              { name: 'name', label: 'Student Name *', placeholder: 'Aarav Sharma', required: true },
-              { name: 'institution', label: 'Institution', placeholder: 'IIT Delhi' },
-              { name: 'year', label: 'Year', placeholder: '2024' },
-              { name: 'grade', label: 'Grade', placeholder: 'A+' },
-            ].map(({ name, label, placeholder, required }) => (
-              <div key={name} className={name === 'institution' ? 'sm:col-span-2' : ''}>
-                <label className="block text-xs font-medium text-fg-3 mb-1.5">{label}</label>
-                <input
-                  name={name}
-                  placeholder={placeholder}
-                  required={required}
-                  disabled={loading}
-                  className="input-field w-full rounded-xl px-4 py-2.5 text-sm"
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary w-full py-3 rounded-xl text-sm flex items-center justify-center gap-2 disabled:opacity-50"
-          >
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
-            Verify Certificate
-            {!loading && <ArrowRight className="w-3.5 h-3.5" />}
-          </button>
-        </form>
-      )}
 
       {/* Loading overlay */}
       {loading && (
-        <div className="mt-6 card p-4 flex items-center gap-3 animate-slide-up">
-          <div className="w-10 h-10 rounded-xl bg-primary-muted flex items-center justify-center flex-shrink-0">
-            <Loader2 className="w-5 h-5 text-primary animate-spin" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium text-fg">{STATUS_MESSAGES[statusIdx]}</p>
-            <div className="w-full h-1.5 mt-2 rounded-full overflow-hidden bg-bg-3">
-              <div className="h-full bg-primary/40 animate-shimmer rounded-full" />
+        <div className="mt-8 card p-6 overflow-hidden relative animate-slide-up border-primary/30">
+          <div className="absolute inset-0 bg-primary/5 animate-pulse-scan pointer-events-none" />
+          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-5">
+            <div className="w-16 h-16 rounded-2xl bg-bg-elevated border border-primary/20 flex flex-col items-center justify-center flex-shrink-0 animate-pulse-scan">
+              <Sparkles className="w-6 h-6 text-primary mb-1 animate-spin-slow" />
+              <div className="text-[9px] font-mono text-primary font-bold uppercase tracking-widest">AI SCAN</div>
+            </div>
+            <div className="flex-1 w-full text-center sm:text-left">
+              <div className="flex justify-between items-end mb-2">
+                <p className="text-sm font-semibold text-fg tracking-wide uppercase">
+                  {STATUS_MESSAGES[statusIdx]}
+                </p>
+                <span className="text-xs font-mono text-primary font-bold">
+                  {Math.round(((statusIdx + 1) / STATUS_MESSAGES.length) * 100)}%
+                </span>
+              </div>
+              <div className="w-full h-2 rounded-full overflow-hidden bg-bg-3 relative">
+                <div 
+                  className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300 ease-out animate-progress-wipe"
+                  style={{ width: `${((statusIdx + 1) / STATUS_MESSAGES.length) * 100}%` }}
+                />
+              </div>
+              <div className="flex justify-between mt-2 gap-2 text-[10px] uppercase tracking-wider text-fg-3/70 font-mono">
+                <span>Init: Matrix_OK</span>
+                <span>Sys_Thread: Validating</span>
+              </div>
             </div>
           </div>
         </div>

@@ -1,68 +1,302 @@
 [
   {
-    "timestamp": "2026-04-15T10:34:45.624540+00:00",
-    "cert_id": "CERT-100001",
-    "verdict": "VALID",
-    "score": 100.0
-  },
-  {
-    "timestamp": "2026-04-15T10:24:25.505092+00:00",
-    "cert_id": "CERT-100001",
-    "verdict": "SUSPICIOUS",
-    "score": 64.0
-  },
-  {
-    "timestamp": "2026-04-14T18:15:12.354889+00:00",
-    "cert_id": "UNKNOWN",
+    "timestamp": "2026-04-16T09:01:29.194017+00:00",
+    "cert_id": "ENAINCUNNG",
     "verdict": "FAKE",
-    "score": 20.0
+    "score": 3.0
   },
   {
-    "timestamp": "2026-04-14T18:06:32.599287+00:00",
-    "cert_id": "CERT-100001",
+    "timestamp": "2026-04-16T09:00:45.527721+00:00",
+    "cert_id": "48G19C309R",
     "verdict": "VALID",
-    "score": 100.0
+    "score": 88.0
   },
   {
-    "timestamp": "2026-04-14T18:04:37.470946+00:00",
-    "cert_id": "CERT-100001",
-    "verdict": "VALID",
-    "score": 100.0
-  },
-  {
-    "timestamp": "2026-04-14T18:01:44.954527+00:00",
-    "cert_id": "CERT-100001",
-    "verdict": "SUSPICIOUS",
-    "score": 64.0
-  },
-  {
-    "timestamp": "2026-04-14T17:53:53.931498+00:00",
-    "cert_id": "CERT-999999",
+    "timestamp": "2026-04-16T07:33:19.129861+00:00",
+    "cert_id": "ENAINCUNNG",
     "verdict": "FAKE",
-    "score": 24.0
+    "score": 3.0
   },
   {
-    "timestamp": "2026-04-14T17:53:03.143327+00:00",
-    "cert_id": "CERT-100001",
-    "verdict": "VALID",
-    "score": 100.0
-  },
-  {
-    "timestamp": "2026-04-14T17:49:19.631620+00:00",
-    "cert_id": "CERT-100029",
-    "verdict": "VALID",
-    "score": 100.0
-  },
-  {
-    "timestamp": "2026-04-14T17:49:15.800014+00:00",
-    "cert_id": "CERT-999999",
+    "timestamp": "2026-04-16T06:48:38.220201+00:00",
+    "cert_id": "ENAINCUNNG",
     "verdict": "FAKE",
-    "score": 24.0
+    "score": 3.0
   },
   {
-    "timestamp": "2026-04-14T17:49:01.450154+00:00",
-    "cert_id": "CERT-100001",
+    "timestamp": "2026-04-16T06:47:38.037428+00:00",
+    "cert_id": "18G18C3098",
     "verdict": "VALID",
-    "score": 100.0
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T05:53:44.074991+00:00",
+    "cert_id": "1BG19CS098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T05:50:39.958261+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T05:24:08.596403+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T05:23:42.731205+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:55:23.620265+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:54:46.226895+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:53:57.407326+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:52:42.929169+00:00",
+    "cert_id": "18G19C5088",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:52:27.694082+00:00",
+    "cert_id": "18G19C5088",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:52:12.556920+00:00",
+    "cert_id": "18G19C5088",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:51:57.356927+00:00",
+    "cert_id": "18G19C5088",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:51:42.367718+00:00",
+    "cert_id": "18G19C5088",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:51:27.065127+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:51:12.414176+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:50:55.925558+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:50:31.176212+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:50:04.978860+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:49:49.310104+00:00",
+    "cert_id": "UNIVERSITY",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:49:34.010225+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:49:17.940957+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:49:02.868017+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:48:47.716125+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:48:32.910205+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:48:17.180643+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:48:02.258572+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:47:47.357044+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:47:32.109659+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:47:15.913360+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:47:01.307582+00:00",
+    "cert_id": "VISVESVAKA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:46:45.986083+00:00",
+    "cert_id": "VSTESMARAA",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:46:29.841381+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:46:16.867246+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:46:02.234100+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:45:45.910969+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:45:30.618806+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:45:15.683121+00:00",
+    "cert_id": "1BG19CS098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:45:00.890267+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:44:44.453314+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:44:27.828033+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:44:13.588215+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:42:16.212217+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:41:29.276229+00:00",
+    "cert_id": "ENAINCUNNG",
+    "verdict": "FAKE",
+    "score": 3.0
+  },
+  {
+    "timestamp": "2026-04-16T03:38:56.210426+00:00",
+    "cert_id": "18G18C3098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:38:29.182717+00:00",
+    "cert_id": "1BG19CS098",
+    "verdict": "VALID",
+    "score": 88.0
+  },
+  {
+    "timestamp": "2026-04-16T03:38:00.156575+00:00",
+    "cert_id": "48G19C309R",
+    "verdict": "VALID",
+    "score": 88.0
   }
 ]

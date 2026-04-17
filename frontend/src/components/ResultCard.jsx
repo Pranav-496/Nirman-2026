@@ -72,11 +72,11 @@ export default function ResultCard({ data }) {
   };
 
   return (
-    <div className={`card overflow-hidden ${cfg.glow} animate-scale-in`}>
+    <div className={`card overflow-hidden ${cfg.glow} animate-scale-in ${verdict === 'FAKE' ? 'ring-2 ring-fake/40' : ''}`}>
       {/* Verdict Banner */}
-      <div className={`px-6 py-5 ${cfg.bg} flex items-center justify-between`}>
+      <div className={`px-6 py-5 ${cfg.bg} flex items-center justify-between ${verdict === 'FAKE' ? 'animate-shake-error shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]' : ''}`}>
         <div className="flex items-center gap-3">
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${cfg.badge}`}>
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${cfg.badge} ${verdict === 'VALID' ? 'animate-stamp-in shadow-[0_0_15px_rgba(16,185,129,0.5)]' : ''}`}>
             <VerdictIcon className={`w-7 h-7 ${cfg.color}`} />
           </div>
           <div>
@@ -118,11 +118,10 @@ export default function ResultCard({ data }) {
           <h3 className="text-xs font-semibold text-fg-3 uppercase tracking-wider mb-3">Extracted Certificate Data</h3>
           <div className="card p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              ['Certificate ID', extracted_fields.cert_id],
+              ['USN', extracted_fields.cert_id],
               ['Student Name', extracted_fields.name],
               ['Institution', extracted_fields.institution],
               ['Year', extracted_fields.year],
-              ['Grade', extracted_fields.grade],
             ].map(([label, value], i) => (
               <div
                 key={label}

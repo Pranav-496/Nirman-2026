@@ -1,15 +1,15 @@
-"""EduTrust API — FastAPI entry point."""
+"""AuthentiFy API — FastAPI entry point."""
 
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import verify, qr, health, history, stats
+from routers import verify, qr, health, history, stats, auth
 
 logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(
-    title="EduTrust API",
+    title="AuthentiFy API",
     description="AI-Powered Certificate Verification System",
     version="1.0.0",
 )
@@ -29,6 +29,7 @@ app.include_router(verify.router)
 app.include_router(qr.router)
 app.include_router(history.router)
 app.include_router(stats.router)
+app.include_router(auth.router)
 
 
 @app.on_event("startup")
