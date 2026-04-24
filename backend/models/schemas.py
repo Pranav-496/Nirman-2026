@@ -69,3 +69,30 @@ class TokenResponse(BaseModel):
 
 class GoogleLoginRequest(BaseModel):
     token: str
+
+
+# --- Certificate Link Verification Models ---
+
+class CertLinkResult(BaseModel):
+    url_found: bool = False
+    url: Optional[str] = None
+    page_name: Optional[str] = None
+    cert_name: Optional[str] = None
+    match_score: float = 0.0
+    verified: bool = False
+    method: Optional[str] = None    # "qr", "ocr", "opencv", "manual"
+    error: Optional[str] = None
+
+
+class CertVerificationResponse(BaseModel):
+    verdict: str  # "VERIFIED" or "DENIED"
+    cert_name: Optional[str] = None
+    detected_urls: list[str] = []
+    link_result: CertLinkResult
+    message: str = ""
+
+
+class ManualCertVerifyRequest(BaseModel):
+    url: str
+    name: str
+

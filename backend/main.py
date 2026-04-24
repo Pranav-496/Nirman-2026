@@ -4,7 +4,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import verify, qr, health, history, stats, auth
+from routers import verify, qr, health, history, stats, auth, link_verify
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,6 +30,7 @@ app.include_router(qr.router)
 app.include_router(history.router)
 app.include_router(stats.router)
 app.include_router(auth.router)
+app.include_router(link_verify.router)
 
 
 @app.on_event("startup")

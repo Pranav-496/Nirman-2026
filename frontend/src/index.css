@@ -369,6 +369,10 @@ body {
   animation: scale-in 0.3s ease-out forwards;
 }
 
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
 .animate-shimmer {
   background: linear-gradient(90deg, transparent 0%, var(--et-primary-muted) 50%, transparent 100%);
   background-size: 200% 100%;

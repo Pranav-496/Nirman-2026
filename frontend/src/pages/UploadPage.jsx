@@ -1,140 +1,135 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Keyboard, Loader2, Sparkles, Zap, Lock, ArrowRight } from 'lucide-react';
-import DropZone from '../components/DropZone';
-import api from '../api/client';
-
-const STATUS_MESSAGES = [
-  'Extracting text via OCR...',
-  'Running AI anomaly detection...',
-  'Computing SHA-256 hash...',
-  'Checking database records...',
-  'Generating confidence score...',
-];
+import { FileText, Award, ShieldCheck, Zap, Lock, Brain, Database, Link2, QrCode, Search, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function UploadPage() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [statusIdx, setStatusIdx] = useState(0);
-  const [error, setError] = useState('');
-
-  // --- Auto-cycle status messages during loading ---
-  const startStatusCycle = () => {
-    let i = 0;
-    const interval = setInterval(() => {
-      i = (i + 1) % STATUS_MESSAGES.length;
-      setStatusIdx(i);
-    }, 1500);
-    return interval;
-  };
-
-  // --- File upload handler ---
-  const handleFileUpload = async (files) => {
-    setLoading(true);
-    setError('');
-    const interval = startStatusCycle();
-    try {
-      const results = [];
-      const filesArray = Array.isArray(files) ? files : [files];
-      
-      for (const file of filesArray) {
-        const form = new FormData();
-        form.append('file', file);
-        const { data } = await api.post('/verify', form, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        results.push({ ...data, original_file: file.name });
-      }
-      
-      if (results.length === 1) {
-        navigate('/result', { state: { result: results[0] } });
-      } else {
-        navigate('/result', { state: { results: results } });
-      }
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Verification failed. Please try again.');
-    } finally {
-      clearInterval(interval);
-      setLoading(false);
-    }
-  };
-
-  // --- Removed Manual form handler ---
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10 sm:py-14">
+    <div className="max-w-4xl mx-auto px-4 py-10 sm:py-14">
       {/* Hero */}
-      <div className="text-center mb-10 animate-slide-up">
+      <div className="text-center mb-12 animate-slide-up">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-muted border border-primary/15 text-primary-light text-xs font-medium mb-5">
-          <Sparkles className="w-3.5 h-3.5" /> AI-Powered Verification Engine
+          <Sparkles className="w-3.5 h-3.5" /> AI-Powered Document Verification
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold gradient-text leading-tight tracking-tight">
-          Verify Any Certificate
+          What would you like to verify?
         </h1>
         <p className="text-fg-2 mt-4 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-          Upload a certificate image or PDF — our AI pipeline extracts data, checks integrity,
-          and detects tampering in seconds.
+          Choose your verification mode below. Each uses a specialized AI pipeline tailored for the document type.
         </p>
       </div>
 
-      {/* Feature badges */}
-      <div className="flex flex-wrap justify-center gap-2.5 mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-        {[
-          { icon: Zap, text: 'OCR Extraction' },
-          { icon: Lock, text: 'SHA-256 Hashing' },
-          { icon: ShieldCheck, text: 'Tamper Detection' },
-        ].map(({ icon: I, text }) => (
-          <span key={text} className="flex items-center gap-1.5 text-xs text-fg-2 bg-bg-2 border border-border-light px-3 py-1.5 rounded-full">
-            <I className="w-3.5 h-3.5 text-primary/70" /> {text}
-          </span>
-        ))}
-      </div>
-
-      {/* Dropzone is the only method now */}
-
-      <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-        <DropZone onFileSelect={handleFileUpload} disabled={loading} />
-      </div>
-
-      {/* Loading overlay */}
-      {loading && (
-        <div className="mt-8 card p-6 overflow-hidden relative animate-slide-up border-primary/30">
-          <div className="absolute inset-0 bg-primary/5 animate-pulse-scan pointer-events-none" />
-          <div className="relative z-10 flex flex-col sm:flex-row items-center gap-5">
-            <div className="w-16 h-16 rounded-2xl bg-bg-elevated border border-primary/20 flex flex-col items-center justify-center flex-shrink-0 animate-pulse-scan">
-              <Sparkles className="w-6 h-6 text-primary mb-1 animate-spin-slow" />
-              <div className="text-[9px] font-mono text-primary font-bold uppercase tracking-widest">AI SCAN</div>
+      {/* Two Verification Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-slide-up" style={{ animationDelay: '0.15s' }}>
+        
+        {/* Card 1: Marksheet Verification */}
+        <button
+          onClick={() => navigate('/verify/marksheet')}
+          className="card group relative p-0 overflow-hidden text-left hover:border-primary/40 transition-all duration-300 hover:shadow-[0_0_30px_rgba(37,99,235,0.15)] hover:scale-[1.02] cursor-pointer flex flex-col h-full"
+        >
+          {/* Gradient border top */}
+          <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+          
+          <div className="p-6 sm:p-8 flex-1 flex flex-col">
+            {/* Icon + Badge */}
+            <div className="flex items-start justify-between mb-5">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center border border-primary/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all duration-300">
+                <FileText className="w-7 h-7 text-primary-light" />
+              </div>
+              <span className="text-[10px] font-bold text-fg-3 uppercase tracking-widest bg-bg-3 px-2.5 py-1 rounded-full">
+                4-Layer AI
+              </span>
             </div>
-            <div className="flex-1 w-full text-center sm:text-left">
-              <div className="flex justify-between items-end mb-2">
-                <p className="text-sm font-semibold text-fg tracking-wide uppercase">
-                  {STATUS_MESSAGES[statusIdx]}
-                </p>
-                <span className="text-xs font-mono text-primary font-bold">
-                  {Math.round(((statusIdx + 1) / STATUS_MESSAGES.length) * 100)}%
+
+            {/* Title */}
+            <h2 className="text-xl font-bold text-fg mb-2 group-hover:text-primary-light transition-colors">
+              Verify Marksheet
+            </h2>
+            <p className="text-sm text-fg-2 leading-relaxed mb-6">
+              Upload a marksheet image or PDF. Our 4-layer AI pipeline extracts data, verifies hash integrity, detects tampering, and cross-checks the database.
+            </p>
+
+            {/* Feature badges */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {[
+                { icon: Zap, text: 'OCR Extract' },
+                { icon: Lock, text: 'SHA-256' },
+                { icon: Brain, text: 'AI Tamper' },
+                { icon: Database, text: 'DB Match' },
+              ].map(({ icon: I, text }) => (
+                <span key={text} className="flex items-center gap-1 text-[10px] text-fg-3 bg-bg-3 border border-border-light px-2 py-1 rounded-full">
+                  <I className="w-3 h-3 text-primary/60" /> {text}
                 </span>
-              </div>
-              <div className="w-full h-2 rounded-full overflow-hidden bg-bg-3 relative">
-                <div 
-                  className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300 ease-out animate-progress-wipe"
-                  style={{ width: `${((statusIdx + 1) / STATUS_MESSAGES.length) * 100}%` }}
-                />
-              </div>
-              <div className="flex justify-between mt-2 gap-2 text-[10px] uppercase tracking-wider text-fg-3/70 font-mono">
-                <span>Init: Matrix_OK</span>
-                <span>Sys_Thread: Validating</span>
-              </div>
+              ))}
+            </div>
+
+            <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+              Upload Marksheet <ArrowRight className="w-4 h-4" />
             </div>
           </div>
-        </div>
-      )}
 
-      {/* Error */}
-      {error && (
-        <div className="mt-4 p-4 rounded-xl bg-fake-muted border border-fake/20 text-fake text-sm animate-scale-in">
-          {error}
+          {/* Hover glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        </button>
+
+        {/* Card 2: Certificate Verification */}
+        <button
+          onClick={() => navigate('/verify/certificate')}
+          className="card group relative p-0 overflow-hidden text-left hover:border-secondary/40 transition-all duration-300 hover:shadow-[0_0_30px_rgba(8,145,178,0.15)] hover:scale-[1.02] cursor-pointer flex flex-col h-full"
+        >
+          {/* Gradient border top */}
+          <div className="h-1 bg-gradient-to-r from-secondary via-valid to-secondary" />
+          
+          <div className="p-6 sm:p-8 flex-1 flex flex-col">
+            {/* Icon + Badge */}
+            <div className="flex items-start justify-between mb-5">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary/20 to-valid/10 flex items-center justify-center border border-secondary/20 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(8,145,178,0.3)] transition-all duration-300">
+                <Award className="w-7 h-7 text-secondary-light" />
+              </div>
+              <span className="text-[10px] font-bold text-fg-3 uppercase tracking-widest bg-bg-3 px-2.5 py-1 rounded-full">
+                Link Verify
+              </span>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-xl font-bold text-fg mb-2 group-hover:text-secondary-light transition-colors">
+              Verify Certificate
+            </h2>
+            <p className="text-sm text-fg-2 leading-relaxed mb-6">
+              Upload a certificate to auto-detect the verification URL (via QR code or OCR), then fetch and verify the certificate holder's name online.
+            </p>
+
+            {/* Feature badges */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {[
+                { icon: QrCode, text: 'QR Detect' },
+                { icon: Search, text: 'URL Scrape' },
+                { icon: Link2, text: 'Link Verify' },
+                { icon: ShieldCheck, text: 'Name Match' },
+              ].map(({ icon: I, text }) => (
+                <span key={text} className="flex items-center gap-1 text-[10px] text-fg-3 bg-bg-3 border border-border-light px-2 py-1 rounded-full">
+                  <I className="w-3 h-3 text-secondary/60" /> {text}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-secondary group-hover:gap-3 transition-all">
+              Upload Certificate <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+
+          {/* Hover glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        </button>
+      </div>
+
+      {/* Bottom info row */}
+      <div className="mt-10 text-center animate-slide-up" style={{ animationDelay: '0.3s' }}>
+        <div className="flex items-center justify-center gap-2 text-xs text-fg-3">
+          <div className="w-1.5 h-1.5 rounded-full bg-valid animate-pulse" />
+          All verification is processed locally — your documents are never stored
         </div>
-      )}
+      </div>
     </div>
   );
 }

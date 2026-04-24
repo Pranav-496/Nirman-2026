@@ -5,5 +5,26 @@
     "password_hash": "$2b$12$mJtNsRWf5QQj7QZCTHKq5.O9uquwLYlTAeF7E2mDnK8kkJIsqdQTa",
     "name": "user",
     "is_admin": true
+  },
+  {
+    "id": "2",
+    "email": "test@authentify.com",
+    "password_hash": "$2b$12$lSIXtjooixeQ0OThPDzrS.ogwAdiFUEcq7F4.AsUyj2PrhEUcaFKa",
+    "name": "Test User",
+    "is_admin": true
+  },
+  {
+    "id": "3",
+    "email": "pranav409600@gmail.com",
+    "password_hash": "",
+    "name": "Pranav",
+    "is_admin": true
+  },
+  {
+    "id": "4",
+    "email": "test@example.com",
+    "password_hash": "$2b$12$j8aC19X7g1fHMrqq48aR0uPe03tJ.GI7zrVFgMM9CwrTdu/.YkZfi",
+    "name": "Test User",
+    "is_admin": true
   }
 ]

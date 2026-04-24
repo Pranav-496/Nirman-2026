@@ -53,6 +53,8 @@ def extract_fields(raw_text: str) -> dict:
         name = _find(r"Name of the Student[\s:;\-]+([A-Z\s]+)(?:USN|Father|Mother|Date|Course|[\n])", text, 1)
         if not name:
             name = _find(r"(?:awarded\s+to|certif(?:y|ied)\s+that|presented\s+to|name)[:\s]+([A-Z][A-Za-z\s.'-]{2,40})", text, 1)
+        if not name:
+            name = _find(r"completed by\s+([A-Z][A-Za-z\s.'\-]+?)(?=\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)|\d|$)", text, 1)
 
     # --- Institution ---
     institution = _find(
